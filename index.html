@@ -100,6 +100,21 @@ ol.eps li.new { background: #fff4cf; border-color: var(--ink); }
 ol.eps li.new b { background: var(--crown); }
 footer { text-align: center; color: #dfe8ff; font-size: .85rem; font-weight: 600; }
 
+/* contact */
+.contact { padding: 18px 18px 18px; display: grid; gap: 10px; }
+.contact h3 { font-family: var(--display); font-weight: 700; font-size: 1.1rem; margin: 0; display: flex; align-items: center; gap: 8px; }
+.contact h3 .env { width: 30px; height: 30px; border-radius: 9px; background: var(--crown); border: 2px solid var(--ink); display: grid; place-items: center; }
+.contact h3 .env svg { width: 18px; height: 18px; fill: var(--ink); }
+.contact p { margin: 0; color: #2a3160; font-size: .95rem; }
+.mail { font-family: var(--display); font-weight: 600; font-size: 1.05rem; background: #f1f5ff; border: 2px dashed #b9c6ee; border-radius: 12px; padding: 8px 12px; overflow-wrap: anywhere; user-select: all; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 700; font-size: .98rem; color: var(--ink); text-decoration: none; background: #fff; border: var(--stroke) solid var(--ink); border-radius: 999px; padding: 6px 16px; box-shadow: 0 4px 0 var(--ink); cursor: pointer; transition: transform .12s ease, box-shadow .12s ease; }
+.btn.primary { background: var(--crown); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--ink); }
+.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+.btn:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
+.copied { color: #13804a; font-weight: 700; font-size: .9rem; align-self: center; }
+
 /* the cards pop in from a visible resting state */
 @media (prefers-reduced-motion: no-preference) {
   .pop { animation: pop .5s cubic-bezier(.2, 1.4, .4, 1) both; }
@@ -164,7 +179,31 @@ footer { text-align: center; color: #dfe8ff; font-size: .85rem; font-weight: 600
     </ol>
   </section>
 
+  <section class="card contact pop" id="contact" aria-label="ติดต่อ">
+    <h3><span class="env" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.4V17h16V7.4l-8 5.3-8-5.3zM5.6 7l6.4 4.2L18.4 7H5.6z"/></svg></span>ติดต่องาน / ร่วมงาน</h3>
+    <p>สปอนเซอร์ ร่วมงาน หรือสอบถาม ส่งอีเมลมาได้เลย</p>
+    <div class="mail" id="mail">hight8015 [at] gmail.com</div>
+    <div class="row">
+      <a class="btn primary" id="mailto" href="#contact">ส่งอีเมล</a>
+      <button class="btn" id="copy" type="button">คัดลอกอีเมล</button>
+      <span class="copied" id="copied" hidden>คัดลอกแล้ว</span>
+    </div>
+  </section>
+
   <footer>กดติดตามไว้ ตอนต่อไปมาเร็ว ๆ นี้ 👑</footer>
+  <script>
+    (function () {
+      var a = ['hight8015', 'gmail.com'].join('@');           // assembled here so scrapers reading the HTML do not see the address
+      var box = document.getElementById('mail'), link = document.getElementById('mailto'), btn = document.getElementById('copy'), ok = document.getElementById('copied');
+      box.textContent = a; link.href = 'mailto:' + a + '?subject=' + encodeURIComponent('ติดต่อ Chaster Clip');
+      btn.addEventListener('click', function () {
+        var done = function () { ok.hidden = false; setTimeout(function () { ok.hidden = true; }, 1800); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(a).then(done, function () { selectBox(); });
+        else selectBox();
+        function selectBox() { var r = document.createRange(); r.selectNodeContents(box); var s = getSelection(); s.removeAllRanges(); s.addRange(r); done(); }
+      });
+    })();
+  </script>
 </div>
 
 </body>
