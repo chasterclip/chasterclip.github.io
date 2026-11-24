@@ -184,7 +184,7 @@ footer { text-align: center; color: #dfe8ff; font-size: .85rem; font-weight: 600
     <p>สปอนเซอร์ ร่วมงาน หรือสอบถาม ส่งอีเมลมาได้เลย</p>
     <div class="mail" id="mail">hight8015 [at] gmail.com</div>
     <div class="row">
-      <a class="btn primary" id="mailto" href="#contact">ส่งอีเมล</a>
+      <a class="btn primary" id="mailto" href="#contact">ส่งผ่าน Gmail</a>
       <button class="btn" id="copy" type="button">คัดลอกอีเมล</button>
       <span class="copied" id="copied" hidden>คัดลอกแล้ว</span>
     </div>
@@ -195,7 +195,9 @@ footer { text-align: center; color: #dfe8ff; font-size: .85rem; font-weight: 600
     (function () {
       var a = ['hight8015', 'gmail.com'].join('@');           // assembled here so scrapers reading the HTML do not see the address
       var box = document.getElementById('mail'), link = document.getElementById('mailto'), btn = document.getElementById('copy'), ok = document.getElementById('copied');
-      box.textContent = a; link.href = 'mailto:' + a + '?subject=' + encodeURIComponent('ติดต่อ Chaster Clip');
+      box.textContent = a;   // Gmail's compose page (web, or the Gmail app on phones that hand the link over), address + subject filled in
+      link.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(a) + '&su=' + encodeURIComponent('ติดต่อ Chaster Clip');
+      link.target = '_blank'; link.rel = 'noopener';
       btn.addEventListener('click', function () {
         var done = function () { ok.hidden = false; setTimeout(function () { ok.hidden = true; }, 1800); };
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(a).then(done, function () { selectBox(); });
